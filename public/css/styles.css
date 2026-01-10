@@ -194,7 +194,7 @@ main {
 
 .btn {
   display: inline-block;
-  background-color: var(--accent-color);
+  background-color: #9a3412;
   color: var(--white);
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
@@ -206,7 +206,7 @@ main {
 
 .btn:hover,
 .btn:focus {
-  background-color: var(--accent-dark);
+  background-color: #7c2d12;
   text-decoration: none;
   color: var(--white);
 }
