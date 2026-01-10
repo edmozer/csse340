@@ -8,13 +8,14 @@
 /******* Root Variables ***************/
 :root {
   --primary-color: #1a365d;
-  --secondary-color: #2c5282;
-  --accent-color: #ed8936;
+  --secondary-color: #1e4a73;
+  --accent-color: #c65d00;
+  --accent-dark: #9c4a00;
   --light-color: #f7fafc;
   --dark-color: #1a202c;
   --text-color: #2d3748;
   --white: #ffffff;
-  --gray: #718096;
+  --gray: #4a5568;
   --light-gray: #e2e8f0;
   --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-heading: Georgia, 'Times New Roman', Times, serif;
@@ -91,8 +92,9 @@ h1, h2, h3 {
 
 #tools a:hover,
 #tools a:focus {
-  background-color: var(--accent-color);
+  background-color: var(--accent-dark);
   text-decoration: none;
+  color: var(--white);
 }
 
 /******* Navigation Styles ***************/
@@ -127,8 +129,9 @@ nav {
 .nav-list a:hover,
 .nav-list a:focus,
 .nav-list a.active {
-  background-color: var(--accent-color);
+  background-color: var(--accent-dark);
   text-decoration: none;
+  color: var(--white);
 }
 
 /******* Main Content Styles ***************/
@@ -156,7 +159,6 @@ main {
 
 .tagline {
   font-size: 1rem;
-  opacity: 0.9;
   margin: 0;
 }
 
@@ -186,7 +188,7 @@ main {
 .price {
   font-size: 1.25rem;
   font-weight: bold;
-  color: var(--accent-color);
+  color: var(--accent-dark);
   margin: 0.5rem 0;
 }
 
@@ -199,11 +201,12 @@ main {
   font-weight: bold;
   text-transform: uppercase;
   margin-top: 1rem;
+  font-size: 1rem;
 }
 
 .btn:hover,
 .btn:focus {
-  background-color: var(--primary-color);
+  background-color: var(--accent-dark);
   text-decoration: none;
   color: var(--white);
 }
