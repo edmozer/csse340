@@ -4,6 +4,33 @@ const utilities = require('../utilities')
 const invCont = {}
 
 /* ***************************
+ *  Build inventory by classification view
+ * ************************** */
+invCont.buildInventoryByClassification = async function (req, res, next) {
+  try {
+    const classificationName = req.params.classificationName
+    const data = await invModel.getInventoryByClassification(classificationName)
+    
+    if (!data || data.length === 0) {
+      const err = new Error('No vehicles found for this classification')
+      err.status = 404
+      return next(err)
+    }
+
+    const grid = utilities.buildInventoryGrid(data)
+    const title = `${classificationName} Vehicles`
+    
+    res.render('inventory/classification', {
+      title: title,
+      grid: grid,
+      errors: null
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+/* ***************************
  *  Build vehicle detail view
  * ************************** */
 invCont.buildVehicleDetail = async function (req, res, next) {

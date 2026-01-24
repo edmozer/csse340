@@ -17,3 +17,7 @@ node_modules
 
 # README file
 README.md
+
+# Test evidence and temporary files
+test-evidence/
+init-database.js
