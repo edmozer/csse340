@@ -17,3 +17,7 @@ node_modules
 
 # README file
 README.md
+
+# Local-only folders
+340-starter/
+test-evidence/

@@ -42,9 +42,13 @@ INSERT INTO classification (classification_name) VALUES
 
 
 INSERT INTO inventory (inv_make, inv_model, inv_year, classification_id, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color) VALUES
-  ('MakeA', 'ModelX', 2023, 1, 'fast car', '/images/makea-modelx.jpg', '/images/makea-modelx-thumb.jpg', 25000.00, 15000, 'Red'),
-  ('MakeB', 'ModelY', 2022, 1, 'sporty ride', '/images/makeb-modely.jpg', '/images/makeb-modely-thumb.jpg', 30000.00, 22000, 'Blue'),
-  ('GM', 'Hummer', 2021, 3, 'a truck with small interiors', '/images/gm-hummer.jpg', '/images/gm-hummer-thumb.jpg', 45000.00, 35000, 'Black');
+  ('Lamborghini', 'Aventador', 2023, 1, 'Do you have 6 kids and like to go offroading? The Aventador is not for you. This car is all about speed, luxury, and style.', '/images/vehicles/adventador.jpg', '/images/vehicles/adventador-tn.jpg', 295000.00, 2500, 'Red'),
+  ('Chevrolet', 'Camaro', 2022, 1, 'A classic American muscle car with modern performance. Perfect for those who appreciate raw power and iconic styling.', '/images/vehicles/camaro.jpg', '/images/vehicles/camaro-tn.jpg', 45000.00, 12000, 'Yellow'),
+  ('DeLorean', 'DMC-12', 1981, 1, 'Where we''re going, we don''t need roads! The iconic time machine from Back to the Future.', '/images/vehicles/delorean.jpg', '/images/vehicles/delorean-tn.jpg', 75000.00, 45000, 'Silver'),
+  ('Ford', 'F-150', 2020, 2, 'A reliable pickup truck for work and weekend adventures.', '/images/vehicles/monster-truck.jpg', '/images/vehicles/monster-truck-tn.jpg', 42000.00, 30000, 'Blue'),
+  ('GM', 'Hummer', 2021, 3, 'A rugged SUV with serious presence and capability.', '/images/vehicles/hummer.jpg', '/images/vehicles/hummer-tn.jpg', 65000.00, 35000, 'Black'),
+  ('Jeep', 'Wrangler', 2020, 3, 'Off-road capability meets everyday practicality in this iconic SUV.', '/images/vehicles/wrangler.jpg', '/images/vehicles/wrangler-tn.jpg', 38000.00, 28000, 'Green'),
+  ('Ford', 'Crown Victoria', 2011, 4, 'A comfortable full-size sedan known for its durability.', '/images/vehicles/crwn-vic.jpg', '/images/vehicles/crwn-vic-tn.jpg', 9500.00, 125000, 'White');
 
 
 INSERT INTO account (account_firstname, account_lastname, account_email, account_password)
@@ -57,5 +61,7 @@ WHERE inv_make = 'GM' AND inv_model = 'Hummer';
 
 
 UPDATE inventory
-SET inv_image = replace(inv_image, '/images/', '/images/vehicles/'),
-    inv_thumbnail = replace(inv_thumbnail, '/images/', '/images/vehicles/');
+SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
+    inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/')
+WHERE inv_image LIKE '/images/%'
+  AND inv_image NOT LIKE '/images/vehicles/%';

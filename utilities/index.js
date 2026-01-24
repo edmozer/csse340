@@ -1,6 +1,42 @@
 const Util = {}
 
 /* ************************
+ * Constructs the inventory grid HTML
+ * ************************** */
+Util.buildInventoryGrid = function (data) {
+  if (!data || data.length === 0) {
+    return '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+
+  let grid = '<ul id="inv-display">'
+
+  data.forEach((vehicle) => {
+    const price = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(vehicle.inv_price)
+
+    grid += '<li>'
+    grid += `<a href="/inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">`
+    grid += `<img src="${vehicle.inv_thumbnail}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors">`
+    grid += '</a>'
+    grid += '<div class="namePrice">'
+    grid += '<hr>'
+    grid += `<h2><a href="/inv/detail/${vehicle.inv_id}" title="View ${vehicle.inv_make} ${vehicle.inv_model} details">`
+    grid += `${vehicle.inv_make} ${vehicle.inv_model}`
+    grid += '</a></h2>'
+    grid += `<span>${price}</span>`
+    grid += '</div>'
+    grid += '</li>'
+  })
+
+  grid += '</ul>'
+  return grid
+}
+
+/* ************************
  * Constructs the vehicle detail HTML
  * ************************** */
 Util.buildVehicleDetailHTML = function(vehicle) {
