@@ -10,6 +10,8 @@ const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
+const inventoryRoute = require("./routes/inventoryRoute")
+const { handle404, errorHandler } = require("./middleware/errorHandler")
 
 /* ***********************
  * View Engine and Templates
@@ -29,6 +31,17 @@ app.use(static)
 app.get("/", function(req, res){
   res.render("index", {title: "Home"})
 })
+
+/* ***********************
+ * Inventory routes
+ *************************/
+app.use("/inv", inventoryRoute)
+
+/* ***********************
+ * Error Handling
+ *************************/
+app.use(handle404)
+app.use(errorHandler)
 
 /* ***********************
  * Local Server Information

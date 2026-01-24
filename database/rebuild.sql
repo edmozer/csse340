@@ -14,11 +14,14 @@ CREATE TABLE inventory (
   inv_id SERIAL PRIMARY KEY,
   inv_make VARCHAR(100) NOT NULL,
   inv_model VARCHAR(100) NOT NULL,
+  inv_year INTEGER NOT NULL,
   classification_id INTEGER REFERENCES classification(classification_id),
   inv_description TEXT,
   inv_image TEXT,
   inv_thumbnail TEXT,
-  inv_price NUMERIC(10,2)
+  inv_price NUMERIC(10,2),
+  inv_miles INTEGER,
+  inv_color VARCHAR(50)
 );
 
 CREATE TABLE account (
@@ -38,10 +41,10 @@ INSERT INTO classification (classification_name) VALUES
   ('Sedan');
 
 
-INSERT INTO inventory (inv_make, inv_model, classification_id, inv_description, inv_image, inv_thumbnail, inv_price) VALUES
-  ('MakeA', 'ModelX', 1, 'fast car', '/images/makea-modelx.jpg', '/images/makea-modelx-thumb.jpg', 25000.00),
-  ('MakeB', 'ModelY', 1, 'sporty ride', '/images/makeb-modely.jpg', '/images/makeb-modely-thumb.jpg', 30000.00),
-  ('GM', 'Hummer', 3, 'a truck with small interiors', '/images/gm-hummer.jpg', '/images/gm-hummer-thumb.jpg', 45000.00);
+INSERT INTO inventory (inv_make, inv_model, inv_year, classification_id, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color) VALUES
+  ('MakeA', 'ModelX', 2023, 1, 'fast car', '/images/makea-modelx.jpg', '/images/makea-modelx-thumb.jpg', 25000.00, 15000, 'Red'),
+  ('MakeB', 'ModelY', 2022, 1, 'sporty ride', '/images/makeb-modely.jpg', '/images/makeb-modely-thumb.jpg', 30000.00, 22000, 'Blue'),
+  ('GM', 'Hummer', 2021, 3, 'a truck with small interiors', '/images/gm-hummer.jpg', '/images/gm-hummer-thumb.jpg', 45000.00, 35000, 'Black');
 
 
 INSERT INTO account (account_firstname, account_lastname, account_email, account_password)
