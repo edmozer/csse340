@@ -334,6 +334,69 @@ footer a:focus {
   text-align: center;
 }
 
+/* Flash / Form Messages */
+.notice {
+  background-color: #fffbeb;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.form-errors {
+  background-color: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #7f1d1d;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.form-errors ul {
+  margin: 0.5rem 0 0;
+}
+
+/* Inventory Forms */
+.form-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  max-width: 680px;
+}
+
+.form-card label {
+  display: block;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.form-card input,
+.form-card textarea,
+.form-card select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--light-gray);
+  margin-top: 0.25rem;
+  font-family: var(--font-main);
+  font-size: 1rem;
+}
+
+.form-help {
+  margin-top: 0;
+  color: var(--gray);
+}
+
+.form-card .btn {
+  margin-top: 1.25rem;
+}
+
+.manage-links {
+  margin-top: 1rem;
+}
+
 .error-message {
   font-size: 1.25rem;
   color: var(--gray);
