@@ -71,7 +71,7 @@
     id="inv_image"
     name="inv_image"
     required
-    pattern="^/images/[A-Za-z0-9/_\-]+\.(png|jpg|jpeg|gif)$"
+    pattern="^/images/[A-Za-z0-9/_-]+[.](png|jpe?g|gif)$"
     title="Use a /images/... file path (png, jpg, jpeg, gif)."
     value="<%= inv_image || '' %>"
   >
@@ -82,7 +82,7 @@
     id="inv_thumbnail"
     name="inv_thumbnail"
     required
-    pattern="^/images/[A-Za-z0-9/_\-]+\.(png|jpg|jpeg|gif)$"
+    pattern="^/images/[A-Za-z0-9/_-]+[.](png|jpe?g|gif)$"
     title="Use a /images/... file path (png, jpg, jpeg, gif)."
     value="<%= inv_thumbnail || '' %>"
   >

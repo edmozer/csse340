@@ -109,7 +109,10 @@ Util.buildVehicleDetailHTML = function(vehicle) {
     maximumFractionDigits: 0
   }).format(vehicle.inv_price)
 
-  const mileage = vehicle.inv_miles ? new Intl.NumberFormat('en-US').format(vehicle.inv_miles) : 'N/A'
+  const mileage =
+    vehicle.inv_miles || vehicle.inv_miles === 0
+      ? new Intl.NumberFormat('en-US').format(vehicle.inv_miles)
+      : 'N/A'
 
   let html = '<div class="vehicle-detail">'
   html += `<img src="${vehicle.inv_image}" alt="${vehicle.inv_make} ${vehicle.inv_model}">`
