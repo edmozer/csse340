@@ -36,12 +36,17 @@ if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1)
 }
 
+const sessionSecret = process.env.SESSION_SECRET
+if (process.env.NODE_ENV === "production" && !sessionSecret) {
+  throw new Error("Missing SESSION_SECRET in production environment")
+}
+
 app.use(
   session({
     name: "cse340.sid",
-    secret: process.env.SESSION_SECRET || "dev-only-secret",
+    secret: sessionSecret || "dev-only-secret",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
