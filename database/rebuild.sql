@@ -2,7 +2,7 @@
 DROP TYPE IF EXISTS account_type CASCADE;
 DROP TABLE IF EXISTS inventory, classification, account CASCADE;
 
-CREATE TYPE account_type AS ENUM ('Customer','Admin');
+CREATE TYPE account_type AS ENUM ('Client','Employee','Admin');
 
 
 CREATE TABLE classification (
@@ -30,7 +30,7 @@ CREATE TABLE account (
   account_lastname VARCHAR(50),
   account_email VARCHAR(100) UNIQUE,
   account_password VARCHAR(255),
-  account_type account_type DEFAULT 'Customer'
+  account_type account_type DEFAULT 'Client'
 );
 
 

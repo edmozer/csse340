@@ -88,6 +88,7 @@ h1, h2, h3 {
   padding: 0.5rem 1rem;
   border-radius: 4px;
   font-size: 0.9rem;
+  margin-left: 0.5rem;
 }
 
 #tools a:hover,
@@ -385,12 +386,22 @@ footer a:focus {
 }
 
 .form-help {
-  margin-top: 0;
+  margin-top: 0.5rem;
   color: var(--gray);
+  font-size: 0.9rem;
 }
 
 .form-card .btn {
   margin-top: 1.25rem;
+}
+
+.form-card h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.form-card + .form-card {
+  margin-top: 2rem;
 }
 
 .manage-links {

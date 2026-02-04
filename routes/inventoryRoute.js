@@ -4,32 +4,31 @@ const invController = require('../controllers/invController')
 const utilities = require('../utilities')
 const validate = require('../middleware/inventory-validation')
 
-// Management routes
-router.get('/', utilities.handleErrors(invController.buildManagement))
+// Management routes (protected - Employee/Admin only)
+router.get('/', utilities.checkAccountType, utilities.handleErrors(invController.buildManagement))
 
-// Add classification routes
-router.get('/add-classification', utilities.handleErrors(invController.buildAddClassification))
+// Add classification routes (protected - Employee/Admin only)
+router.get('/add-classification', utilities.checkAccountType, utilities.handleErrors(invController.buildAddClassification))
 router.post(
   '/add-classification',
+  utilities.checkAccountType,
   validate.validateClassification,
   utilities.handleErrors(invController.addClassification)
 )
 
-// Add inventory routes
-router.get('/add-inventory', utilities.handleErrors(invController.buildAddInventory))
+// Add inventory routes (protected - Employee/Admin only)
+router.get('/add-inventory', utilities.checkAccountType, utilities.handleErrors(invController.buildAddInventory))
 router.post(
   '/add-inventory',
+  utilities.checkAccountType,
   validate.validateInventory,
   utilities.handleErrors(invController.addInventory)
 )
 
-// Route to build inventory by classification view
+// Route to build inventory by classification view (public)
 router.get('/type/:classificationName', utilities.handleErrors(invController.buildInventoryByClassification))
 
-// Route to build inventory by classification view
-router.get('/type/:classificationName', invController.buildInventoryByClassification)
-
-// Route to build vehicle detail view
+// Route to build vehicle detail view (public)
 router.get('/detail/:invId', utilities.handleErrors(invController.buildVehicleDetail))
 
 // Route to trigger intentional error

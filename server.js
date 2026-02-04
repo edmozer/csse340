@@ -9,10 +9,12 @@ const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const session = require("express-session")
 const flash = require("connect-flash")
+const cookieParser = require("cookie-parser")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
 const { handle404, errorHandler } = require("./middleware/errorHandler")
 const utilities = require("./utilities")
 
@@ -31,6 +33,7 @@ app.use(static)
  *************************/
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cookieParser())
 
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1)
@@ -55,6 +58,9 @@ app.use(
 )
 
 app.use(flash())
+
+// Check JWT token and make account data available to views
+app.use(utilities.checkJWTToken)
 
 // Make flash messages + nav available to all views
 app.use(async (req, res, next) => {
@@ -82,6 +88,11 @@ app.get("/", function(req, res){
  * Inventory routes
  *************************/
 app.use("/inv", inventoryRoute)
+
+/* ***********************
+ * Account routes
+ *************************/
+app.use("/account", accountRoute)
 
 /* ***********************
  * Error Handling
