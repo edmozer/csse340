@@ -8,12 +8,9 @@ const invCont = {}
  * ************************** */
 invCont.buildManagement = async function (req, res, next) {
   try {
-    let nav = await utilities.getNav()
     res.render('inventory/management', {
       title: 'Inventory Management',
-      nav,
-      errors: null,
-      notice: req.flash ? req.flash('notice') : null
+      errors: null
     })
   } catch (error) {
     next(error)
@@ -25,10 +22,8 @@ invCont.buildManagement = async function (req, res, next) {
  * ************************** */
 invCont.buildAddClassification = async function (req, res, next) {
   try {
-    let nav = await utilities.getNav()
     res.render('inventory/add-classification', {
       title: 'Add New Classification',
-      nav,
       errors: null,
       classification_name: ''
     })
@@ -46,23 +41,14 @@ invCont.addClassification = async function (req, res, next) {
     const result = await invModel.addClassification(classification_name)
     
     if (result) {
-      let nav = await utilities.getNav()
       req.flash('notice', `Classification "${classification_name}" added successfully.`)
-      res.status(201).render('inventory/management', {
-        title: 'Inventory Management',
-        nav,
-        errors: null,
-        notice: req.flash('notice')
-      })
+      res.redirect('/inv/')
     } else {
-      let nav = await utilities.getNav()
       req.flash('notice', 'Sorry, adding classification failed.')
       res.status(501).render('inventory/add-classification', {
         title: 'Add New Classification',
-        nav,
         errors: null,
-        classification_name,
-        notice: req.flash('notice')
+        classification_name
       })
     }
   } catch (error) {
@@ -75,11 +61,9 @@ invCont.addClassification = async function (req, res, next) {
  * ************************** */
 invCont.buildAddInventory = async function (req, res, next) {
   try {
-    let nav = await utilities.getNav()
     let classificationList = await utilities.buildClassificationList()
     res.render('inventory/add-inventory', {
       title: 'Add New Vehicle',
-      nav,
       classificationList,
       errors: null,
       inv_make: '',
@@ -129,21 +113,13 @@ invCont.addInventory = async function (req, res, next) {
     )
 
     if (result) {
-      let nav = await utilities.getNav()
       req.flash('notice', `Vehicle "${inv_make} ${inv_model}" added successfully.`)
-      res.status(201).render('inventory/management', {
-        title: 'Inventory Management',
-        nav,
-        errors: null,
-        notice: req.flash('notice')
-      })
+      res.redirect('/inv/')
     } else {
-      let nav = await utilities.getNav()
       let classificationList = await utilities.buildClassificationList(classification_id)
       req.flash('notice', 'Sorry, adding vehicle failed.')
       res.status(501).render('inventory/add-inventory', {
         title: 'Add New Vehicle',
-        nav,
         classificationList,
         errors: null,
         inv_make,
@@ -154,8 +130,7 @@ invCont.addInventory = async function (req, res, next) {
         inv_thumbnail,
         inv_price,
         inv_miles,
-        inv_color,
-        notice: req.flash('notice')
+        inv_color
       })
     }
   } catch (error) {
