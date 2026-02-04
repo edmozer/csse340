@@ -18,6 +18,6 @@ node_modules
 # README file
 README.md
 
-# Local-only folders
-340-starter/
+# Test evidence and temporary files
 test-evidence/
+init-database.js
