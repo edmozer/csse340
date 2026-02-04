@@ -1,4 +1,5 @@
 const invModel = require('../models/inventory-model')
+const reviewModel = require('../models/review-model')
 const utilities = require('../utilities')
 
 const invCont = {}
@@ -179,12 +180,17 @@ invCont.buildVehicleDetail = async function (req, res, next) {
       return next(err)
     }
 
+    // Get reviews for this vehicle
+    const reviews = await reviewModel.getReviewsByInvId(invId)
+
     const vehicleHTML = utilities.buildVehicleDetailHTML(vehicle)
     const title = `${vehicle.inv_year || ''} ${vehicle.inv_make} ${vehicle.inv_model}`
     
     res.render('inventory/detail', {
       title: title,
       vehicleHTML: vehicleHTML,
+      inv_id: invId,
+      reviews: reviews,
       errors: null
     })
   } catch (error) {

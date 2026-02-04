@@ -1,4 +1,5 @@
 const accountModel = require('../models/account-model')
+const reviewModel = require('../models/review-model')
 const utilities = require('../utilities')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -146,11 +147,19 @@ accountCont.accountLogin = async function (req, res, next) {
 /* ***************************
  *  Deliver account management view
  * ************************** */
-accountCont.buildManagement = async function (req, res) {
-  res.render('account/management', {
-    title: 'Account Management',
-    errors: null,
-  })
+accountCont.buildManagement = async function (req, res, next) {
+  try {
+    const account_id = res.locals.accountData.account_id
+    const reviews = await reviewModel.getReviewsByAccountId(account_id)
+    
+    res.render('account/management', {
+      title: 'Account Management',
+      errors: null,
+      reviews: reviews
+    })
+  } catch (err) {
+    next(err)
+  }
 }
 
 /* ***************************
