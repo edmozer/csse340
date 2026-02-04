@@ -2,7 +2,6 @@ const express = require('express')
 const router = new express.Router()
 const invController = require('../controllers/invController')
 const utilities = require('../utilities')
-const validate = require('../middleware/inventory-validation')
 
 // Management routes (protected - Employee/Admin only)
 router.get('/', utilities.checkAccountType, utilities.handleErrors(invController.buildManagement))
@@ -12,7 +11,6 @@ router.get('/add-classification', utilities.checkAccountType, utilities.handleEr
 router.post(
   '/add-classification',
   utilities.checkAccountType,
-  validate.validateClassification,
   utilities.handleErrors(invController.addClassification)
 )
 
@@ -21,7 +19,6 @@ router.get('/add-inventory', utilities.checkAccountType, utilities.handleErrors(
 router.post(
   '/add-inventory',
   utilities.checkAccountType,
-  validate.validateInventory,
   utilities.handleErrors(invController.addInventory)
 )
 
