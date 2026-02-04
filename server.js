@@ -7,11 +7,14 @@
  *************************/
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
+const session = require("express-session")
+const flash = require("connect-flash")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
 const { handle404, errorHandler } = require("./middleware/errorHandler")
+const utilities = require("./utilities")
 
 /* ***********************
  * View Engine and Templates
@@ -20,10 +23,53 @@ app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
 
+// Static assets (skip DB/session work)
+app.use(static)
+
+/* ***********************
+ * Middleware
+ *************************/
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1)
+}
+
+const sessionSecret = process.env.SESSION_SECRET
+if (process.env.NODE_ENV === "production" && !sessionSecret) {
+  throw new Error("Missing SESSION_SECRET in production environment")
+}
+
+app.use(
+  session({
+    name: "cse340.sid",
+    secret: sessionSecret || "dev-only-secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+    },
+  })
+)
+
+app.use(flash())
+
+// Make flash messages + nav available to all views
+app.use(async (req, res, next) => {
+  try {
+    res.locals.notice = req.flash("notice")
+    res.locals.nav = await utilities.getNav()
+    next()
+  } catch (err) {
+    next(err)
+  }
+})
+
 /* ***********************
  * Routes
  *************************/
-app.use(static)
 
 /* ***********************
  * Index route

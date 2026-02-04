@@ -308,9 +308,115 @@ footer {
   margin-top: 2rem;
 }
 
+footer a {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+footer a:hover,
+footer a:focus {
+  color: #ffedd5;
+}
+
 .copyright {
   margin: 0;
   font-size: 0.9rem;
+}
+
+/* Error View */
+.error-container {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Flash / Form Messages */
+.notice {
+  background-color: #fffbeb;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.form-errors {
+  background-color: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #7f1d1d;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.form-errors ul {
+  margin: 0.5rem 0 0;
+}
+
+/* Inventory Forms */
+.form-card {
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  max-width: 680px;
+}
+
+.form-card label {
+  display: block;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.form-card input,
+.form-card textarea,
+.form-card select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--light-gray);
+  margin-top: 0.25rem;
+  font-family: var(--font-main);
+  font-size: 1rem;
+}
+
+.form-help {
+  margin-top: 0;
+  color: var(--gray);
+}
+
+.form-card .btn {
+  margin-top: 1.25rem;
+}
+
+.manage-links {
+  margin-top: 1rem;
+}
+
+.error-message {
+  font-size: 1.25rem;
+  color: var(--gray);
+  margin-bottom: 1.5rem;
+}
+
+.error-container a {
+  display: inline-block;
+  background-color: var(--accent-dark);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.error-container a:hover,
+.error-container a:focus {
+  background-color: #7c2d12;
+  color: var(--white);
 }
 
 /******* Media Queries for Larger Screens ***************/
