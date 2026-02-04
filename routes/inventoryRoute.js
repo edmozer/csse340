@@ -3,6 +3,11 @@ const router = new express.Router()
 const invController = require('../controllers/invController')
 const utilities = require('../utilities')
 
+// Debug test route
+router.get('/test', utilities.checkAccountType, (req, res) => {
+  res.send('Test route works! User: ' + res.locals.accountData.account_firstname)
+})
+
 // Management routes (protected - Employee/Admin only)
 router.get('/', utilities.checkAccountType, utilities.handleErrors(invController.buildManagement))
 
