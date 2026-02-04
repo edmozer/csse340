@@ -6,8 +6,8 @@ const pool = require('../database')
 async function registerAccount(account_firstname, account_lastname, account_email, account_password) {
   try {
     const sql = `
-      INSERT INTO account (account_firstname, account_lastname, account_email, account_password, account_type)
-      VALUES ($1, $2, $3, $4, 'Client')
+      INSERT INTO account (account_firstname, account_lastname, account_email, account_password)
+      VALUES ($1, $2, $3, $4)
       RETURNING account_id, account_firstname, account_lastname, account_email, account_type
     `
     const result = await pool.query(sql, [
