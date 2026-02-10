@@ -6,6 +6,13 @@ const jwt = require('jsonwebtoken')
 
 const accountCont = {}
 
+function canManageAccount(currentAccountData, requestedAccountId) {
+  const currentId = Number(currentAccountData.account_id)
+  const targetId = Number(requestedAccountId)
+  const isAdmin = currentAccountData.account_type === 'Admin'
+  return isAdmin || currentId === targetId
+}
+
 /* ***************************
  *  Deliver login view
  * ************************** */
@@ -167,7 +174,13 @@ accountCont.buildManagement = async function (req, res, next) {
  * ************************** */
 accountCont.buildUpdate = async function (req, res, next) {
   try {
-    const account_id = parseInt(req.params.account_id)
+    const account_id = parseInt(req.params.account_id, 10)
+
+    if (!canManageAccount(res.locals.accountData, account_id)) {
+      req.flash('notice', 'You can only update your own account information.')
+      return res.redirect(`/account/update/${res.locals.accountData.account_id}`)
+    }
+
     const accountData = await accountModel.getAccountById(account_id)
 
     if (!accountData) {
@@ -195,6 +208,11 @@ accountCont.updateAccount = async function (req, res, next) {
   try {
     const errors = req.validationErrors || []
     const { account_id, account_firstname, account_lastname, account_email } = req.body
+
+    if (!canManageAccount(res.locals.accountData, account_id)) {
+      req.flash('notice', 'You can only update your own account information.')
+      return res.redirect(`/account/update/${res.locals.accountData.account_id}`)
+    }
 
     if (errors.length) {
       return res.render('account/update', {
@@ -265,6 +283,11 @@ accountCont.updatePassword = async function (req, res, next) {
   try {
     const errors = req.validationErrors || []
     const { account_id, account_password } = req.body
+
+    if (!canManageAccount(res.locals.accountData, account_id)) {
+      req.flash('notice', 'You can only update your own account information.')
+      return res.redirect(`/account/update/${res.locals.accountData.account_id}`)
+    }
 
     // Get current account data to restore form if error
     const accountData = await accountModel.getAccountById(account_id)
