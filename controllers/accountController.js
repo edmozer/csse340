@@ -1,5 +1,6 @@
 const accountModel = require('../models/account-model')
 const reviewModel = require('../models/review-model')
+const favoriteModel = require('../models/favorite-model')
 const utilities = require('../utilities')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -157,12 +158,16 @@ accountCont.accountLogin = async function (req, res, next) {
 accountCont.buildManagement = async function (req, res, next) {
   try {
     const account_id = res.locals.accountData.account_id
-    const reviews = await reviewModel.getReviewsByAccountId(account_id)
+    const [reviews, favorites] = await Promise.all([
+      reviewModel.getReviewsByAccountId(account_id),
+      favoriteModel.getFavoritesByAccountId(account_id),
+    ])
     
     res.render('account/management', {
       title: 'Account Management',
       errors: null,
-      reviews: reviews
+      reviews: reviews,
+      favorites: favorites,
     })
   } catch (err) {
     next(err)

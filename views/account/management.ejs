@@ -1,5 +1,11 @@
 <h1><%= title %></h1>
 
+<% if (notice && notice.length) { %>
+  <div class="notice" role="status">
+    <p><%= notice[0] %></p>
+  </div>
+<% } %>
+
 <h2>Welcome <%= accountData.account_firstname %></h2>
 
 <p><a href="/account/update/<%= accountData.account_id %>">Update Account Information</a></p>
@@ -7,6 +13,48 @@
 <% if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
   <h3>Inventory Management</h3>
   <p><a href="/inv/">Manage Inventory</a></p>
+<% } %>
+
+<h3>My Favorite Vehicles</h3>
+<% if (favorites && favorites.length > 0) { %>
+  <table class="reviews-table">
+    <thead>
+      <tr>
+        <th>Vehicle</th>
+        <th>Price</th>
+        <th>Saved On</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% favorites.forEach(function(favorite) { %>
+        <tr>
+          <td>
+            <a href="/inv/detail/<%= favorite.inv_id %>"><%= favorite.inv_year %> <%= favorite.inv_make %> <%= favorite.inv_model %></a>
+          </td>
+          <td>
+            <%= new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(favorite.inv_price) %>
+          </td>
+          <td>
+            <%= new Date(favorite.favorite_date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric'
+            }) %>
+          </td>
+          <td>
+            <form action="/favorite/remove" method="post" class="inline-form">
+              <input type="hidden" name="inv_id" value="<%= favorite.inv_id %>">
+              <input type="hidden" name="return_to" value="/account/">
+              <button type="submit" class="btn-link">Remove</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p>You have not saved any favorite vehicles yet.</p>
 <% } %>
 
 <h3>My Reviews</h3>

@@ -16,6 +16,7 @@ const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
 const reviewRoute = require("./routes/reviewRoute")
+const favoriteRoute = require("./routes/favoriteRoute")
 const { handle404, errorHandler } = require("./middleware/errorHandler")
 const utilities = require("./utilities")
 
@@ -99,6 +100,11 @@ app.use("/account", accountRoute)
  * Review routes
  *************************/
 app.use("/review", reviewRoute)
+
+/* ***********************
+ * Favorite routes
+ *************************/
+app.use("/favorite", favoriteRoute)
 
 /* ***********************
  * Error Handling

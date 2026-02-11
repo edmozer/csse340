@@ -1,5 +1,6 @@
 const invModel = require('../models/inventory-model')
 const reviewModel = require('../models/review-model')
+const favoriteModel = require('../models/favorite-model')
 const utilities = require('../utilities')
 
 const invCont = {}
@@ -182,6 +183,11 @@ invCont.buildVehicleDetail = async function (req, res, next) {
 
     // Get reviews for this vehicle
     const reviews = await reviewModel.getReviewsByInvId(invId)
+    let isFavorited = false
+
+    if (res.locals.loggedin && res.locals.accountData) {
+      isFavorited = await favoriteModel.isFavorited(res.locals.accountData.account_id, invId)
+    }
 
     const vehicleHTML = utilities.buildVehicleDetailHTML(vehicle)
     const title = `${vehicle.inv_year || ''} ${vehicle.inv_make} ${vehicle.inv_model}`
@@ -191,6 +197,7 @@ invCont.buildVehicleDetail = async function (req, res, next) {
       vehicleHTML: vehicleHTML,
       inv_id: invId,
       reviews: reviews,
+      isFavorited,
       errors: null
     })
   } catch (error) {

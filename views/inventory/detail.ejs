@@ -1,6 +1,35 @@
 <h1><%= title %></h1>
 
+<% if (notice && notice.length) { %>
+  <div class="notice" role="status">
+    <p><%= notice[0] %></p>
+  </div>
+<% } %>
+
 <%- vehicleHTML %>
+
+<section class="favorite-section">
+  <h2>Save This Vehicle</h2>
+  <% if (locals.loggedin) { %>
+    <% if (isFavorited) { %>
+      <form action="/favorite/remove" method="post" class="favorite-form">
+        <input type="hidden" name="inv_id" value="<%= inv_id %>">
+        <input type="hidden" name="return_to" value="/inv/detail/<%= inv_id %>">
+        <button type="submit" class="btn-favorite btn-favorite-remove">Remove from Favorites</button>
+      </form>
+    <% } else { %>
+      <form action="/favorite/add" method="post" class="favorite-form">
+        <input type="hidden" name="inv_id" value="<%= inv_id %>">
+        <input type="hidden" name="return_to" value="/inv/detail/<%= inv_id %>">
+        <button type="submit" class="btn-favorite">Add to Favorites</button>
+      </form>
+    <% } %>
+  <% } else { %>
+    <p class="login-prompt">
+      <a href="/account/login">Log in</a> to save this vehicle to your favorites.
+    </p>
+  <% } %>
+</section>
 
 <section class="reviews-section">
   <h2>Customer Reviews</h2>
