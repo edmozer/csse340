@@ -6,37 +6,26 @@ async function upsertRequiredAccounts() {
   const required = [
     {
       account_firstname: 'Basic',
-      account_lastname: 'User',
+      account_lastname: 'Client',
       account_email: 'basic@340.edu',
       account_type: 'Customer',
-      password: process.env.BASIC_ACCOUNT_PASSWORD,
+      password: process.env.BASIC_ACCOUNT_PASSWORD || 'I@mABas1cCl!3nt',
     },
     {
       account_firstname: 'Happy',
       account_lastname: 'Employee',
       account_email: 'happy@340.edu',
       account_type: 'Employee',
-      password: process.env.HAPPY_ACCOUNT_PASSWORD,
+      password: process.env.HAPPY_ACCOUNT_PASSWORD || 'I@mAnEmpl0y33',
     },
     {
       account_firstname: 'Manager',
-      account_lastname: 'Admin',
+      account_lastname: 'User',
       account_email: 'manager@340.edu',
       account_type: 'Admin',
-      password: process.env.MANAGER_ACCOUNT_PASSWORD,
+      password: process.env.MANAGER_ACCOUNT_PASSWORD || 'I@mAnAdm!n1strat0r',
     },
   ]
-
-  const missing = required
-    .filter((account) => !account.password)
-    .map((account) => account.account_email)
-
-  if (missing.length > 0) {
-    throw new Error(
-      `Missing required password env vars for: ${missing.join(', ')}. ` +
-        'Set BASIC_ACCOUNT_PASSWORD, HAPPY_ACCOUNT_PASSWORD, and MANAGER_ACCOUNT_PASSWORD.'
-    )
-  }
 
   for (const account of required) {
     const hashedPassword = await bcrypt.hash(account.password, 10)
